@@ -10,3 +10,6 @@ mongoose.connect(process.env.mongoose_url).then(()=>{
 }).catch((err)=>{
     console.log("err:",err)
 })
+app.get("/",(req,res)=>{
+res.json({messsage:"home"});
+})
