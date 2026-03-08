@@ -5,6 +5,10 @@ let app=express();
 app.listen(3000,()=>{
     console.log("server started")
 })
+let cors=require("cors")
+app.use(cors({
+    credentials:true
+}))
 mongoose.connect(process.env.mongoose_url).then(()=>{
     console.log("database connected");
 }).catch((err)=>{
