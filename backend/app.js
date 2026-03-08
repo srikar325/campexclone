@@ -2,9 +2,12 @@ require("dotenv").config()
 let mongoose=require("mongoose");
 let express=require("express");
 let app=express();
-app.listen(3000,()=>{
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT,()=>{
     console.log("server started")
 })
+
 let cors=require("cors")
 app.use(cors({
     credentials:true
