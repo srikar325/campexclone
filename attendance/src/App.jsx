@@ -1,14 +1,14 @@
 import { useState,useEffect } from 'react'
 
-import './App.css'
-
-
 function App() {
-  useEffect(()=>{
+
+
+  let [answer,setanswer]=useState(null);
+useEffect(()=>{
 async function go(){
 let res=await fetch("https://attendancetracker-6pzj.onrender.com");
-let ans=await res.json();
-console.log(ans);
+answer=await res.json();
+answer?console.log(answer):console.log(" ..loading");
 }
 go();
 },[])
