@@ -20,7 +20,15 @@ mongoose.connect(process.env.mongoose_url).then(()=>{
 }).catch((err)=>{
     console.log("err:",err)
 })
-app.get("/",(req,res)=>{
+let islogged=(req,res,next)=>{
+    if(req.isAutenticated){
+        res.json({logged:true})
+        next()
+    }else{
+        res.json({logged:false})
+    }
+}
+app.get("/",islogged,(req,res)=>{
 res.json({messsage:"home"});
 })
 
