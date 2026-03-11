@@ -1,9 +1,7 @@
-import Signup from "./signup/signup.jsx"
+import {Navigate} from "react-router-dom"
 function Protected ({islogged,children}){
     if(!islogged){
-        return(
-        <Signup/>
-    )
+        return <Navigate to="/signup"/>
     }else{
         return children
     }

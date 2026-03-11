@@ -5,11 +5,27 @@ let app=express();
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT,()=>{
-
     console.log("server started")
 })
 let department=require("./models/depmodel");
+let student=require("./models/student");
+let session=require("express-session");
+app.use(session({
+    secret:"mcdonalds",
+    resave:false,
+    saveUninitialized:false,
+    cookie:{
+        maxAge:180*24*60*60*10000
+    }
+}))
 
+let passport=require("passport");
+let localstrat=require("passport-local");
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localstrat(student.authenticate()));
+passport.serializeUser(student.serializeUser());
+passport.deserializeUser(student.deserializeUser());
 let cors=require("cors")
 app.use(cors({
     origin:"http://localhost:5173",
@@ -22,14 +38,17 @@ mongoose.connect(process.env.mongoose_url).then(()=>{
     console.log("err:",err)
 })
 let islogged=(req,res,next)=>{
-    if(req.isAutenticated){
-        res.json({logged:true})
+    if(req.isAuthenticated()){
         next()
     }else{
         res.json({logged:false})
     }
 }
 app.get("/",islogged,(req,res)=>{
-res.json({messsage:"home"});
+res.json({logged:true});
+})
+app.post("/signup",(req,res)=>{
+    console.log(req.body);
+
 })
 
